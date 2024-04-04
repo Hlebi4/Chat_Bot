@@ -1,17 +1,23 @@
 from aiogram import Bot, Dispatcher
 from aiogram.types import Message
+from core.handlers.basic import get_start
 import asyncio
-token = '1974044321:AAHFWyRqn05-wTDgx8PzBMU9Cr_M6AYPQns'
+import logging
+from core.settings import settings
 
-async def get_start(message: Message, bot: Bot):
-    await bot.send_message(message.from_user.id, f'Привет {message.from_user.first_name}. Рад тебя видеть!')
-    await message.answer(f'Привет {message.from_user.first_name}. Рад тебя видеть!')
-    await message.reply(f'Привет {message.from_user.first_name}. Рад тебя видеть!')
 
+async def start_bot(bot: Bot):
+    await bot.send_message(settings.bots.admin_id, text='Бот запущен!')
+async def stop_bot(bot: Bot):
+    await bot.send_message(settings.bots.admin_id,  text = 'Бот остановлен!')
 async def start():
-    bot = Bot(token=token)
+    logging.basicConfig(level=logging.INFO)
+    bot = Bot(token=settings.bots.bot_token)
 
     dp = Dispatcher()
+    dp.startup.register(start_bot)
+    dp.shutdown.register(stop_bot)
+
     dp.message.register(get_start)
 
     try:
