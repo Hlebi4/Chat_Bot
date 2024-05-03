@@ -4,9 +4,11 @@ from core.handlers.basic import get_start
 import asyncio
 import logging
 from core.settings import settings
+from core.untils.commands import set_commands
 
 
 async def start_bot(bot: Bot):
+    await set_commands(bot)
     await bot.send_message(settings.bots.admin_id, text='Бот запущен!')
 async def stop_bot(bot: Bot):
     await bot.send_message(settings.bots.admin_id,  text = 'Бот остановлен!')
