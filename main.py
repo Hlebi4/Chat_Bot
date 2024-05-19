@@ -3,8 +3,11 @@ from aiogram.types import Message
 from core.handlers.basic import get_start
 import asyncio
 import logging
+from aiogram.filters import Command
 from core.settings import settings
 from core.untils.commands import set_commands
+from core.handlers import recommendation
+from core.untils.statesform import StepsForm
 
 
 async def start_bot(bot: Bot):
@@ -19,6 +22,8 @@ async def start():
     dp = Dispatcher()
     dp.startup.register(start_bot)
     dp.shutdown.register(stop_bot)
+    dp.message.register(recommendation.get_recommendatrion, Command(commands='get_recommendation'))
+    dp.message.register(recommendation.expectation_rec, StepsForm.GET_FILM)
 
     dp.message.register(get_start)
 

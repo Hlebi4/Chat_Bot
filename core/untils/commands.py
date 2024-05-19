@@ -13,6 +13,10 @@ async def set_commands(bot: Bot):
         BotCommand(
             command='cancel',
             description='Сбросить'
+        ),
+        BotCommand(
+            command='get_recommendation',
+            description='Получить рекомендацию'
         )
     ]
 
