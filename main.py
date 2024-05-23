@@ -29,6 +29,7 @@ async def start():
     dp.shutdown.register(stop_bot)
     dp.message.register(recommendation.get_recommendatrion, Command(commands='get_recommendation'))
     dp.message.register(recommendation.expectation_rec, StepsForm.GET_FILM)
+    dp.message.register(recommendation.get_rating, StepsForm.GET_RATING)
 
     dp.message.register(get_start)
 
@@ -111,15 +112,12 @@ userRatings = ratings.pivot_table(index=['userId'],columns=['title'],values='rat
 corrMatrix = userRatings.corr(method='pearson')
 
 # Функция сходства для поиска похожих фильмов
-def get_similar(movie_name,rating):
-    similar_ratings = corrMatrix[movie_name]*(rating-2.5)
+def get_similar(movie_name, rating):
+    similar_ratings = corrMatrix[movie_name] * (rating - 2.5)
+    # Получаем индексы фильмов
     similar_ratings = similar_ratings.sort_values(ascending=False)
-    return similar_ratings
-
-romantic_lover = [("127 Hours (2010)",2),("Hangover, The (2009)",4)]
-similar_movies = pd.DataFrame()
-for movie,rating in romantic_lover:
-    similar_movies = pd.concat([similar_movies, get_similar(movie,rating)], axis=1)
+    similar_ratings = pd.DataFrame(data=similar_ratings)
+    return '\n'.join(similar_ratings[1:11].index)
 
 if __name__ == "__main__":
     asyncio.run(start())
