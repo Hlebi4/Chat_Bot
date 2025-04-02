@@ -3,6 +3,7 @@
 Используемая для обучения модели выборка включает в себя наименования фильмов, их описание, количество отзывов и рейтинг для каждого фильма.
 
 [movies.csv](https://github.com/Hlebi4/Chat_Bot/blob/main/core/tmdb_5000_credits.csv)
+
 [ratings.csv](https://github.com/Hlebi4/Chat_Bot/blob/main/core/ratings.csv)
 
 ## Ход выполнения работы
